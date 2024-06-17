@@ -9,25 +9,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-		<div class="container-fluid justify-content-end">
-			<a href="#" class="me-5">
-				<i class="fas fa-envelope fa-2x " style="color: #FFD700"></i>
-			</a>
-			<a href="#" class="me-5">
-				<i class="fab fa-line fa-2x" style="color: green"></i>
-			</a>
-			<a href="#" class="me-5">
-				<i class="fab fa-facebook fa-2x" style="color: blue"></i>
-			</a>
-			<a href="#" class="me-2 text-decoration-none">
-				<i class="fas fa-shopping-cart fa-lg" style="color: #428bca"></i>
-				<strong class="p-secondary">購物車 ( ${shopCount ? shopCount : '0'} )</strong>
-			</a>
-		</div>
-	</nav>
-	<script>
-		
-	</script>
+	<%@ include file="EBANavBar.jsp"%>
 </body>
 </html>
