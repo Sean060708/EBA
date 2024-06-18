@@ -1,15 +1,25 @@
 package com.EBA.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.EBA.Model.R;
+import com.EBA.Model.UserServiceImpl;
+import com.EBA.Model.Users;
 
 
 @Controller
 public class EBA {
+	@Autowired
+	private UserServiceImpl uService;
+	
 	
 	@GetMapping("/EBA")
 	public String GoEBA() {
@@ -20,10 +30,19 @@ public class EBA {
 	public String EBALogin() {
 		return "EBALogin";
 	}
-	@PostMapping("/test")
+	@PostMapping("/login")
 	@ResponseBody
-	public String test(@RequestParam("username") String username,@RequestParam("password") String password,Model m) {
-
-		return username + password;
+	public R Login(@RequestBody Users users) {
+		 String jwt = uService.login(users);
+		 if(StringUtils.hasLength(jwt)) {
+			 return R.ok().message("登入成功").data("token",jwt);
+		 }
+		 return R.error().message("登入失敗");
+	}
+	
+	@GetMapping("/hello")
+	@ResponseBody
+	public String hello() {
+		return "Hello";
 	}
 }

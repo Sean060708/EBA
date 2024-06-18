@@ -3,10 +3,12 @@ package com.EBA.Model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +27,7 @@ public class Users implements Serializable {
 	private String username;
 	
 	private String nickname;
-	
+	@JSONField(serialize = false)
 	private String password;
 	
 	private Integer status;
@@ -168,6 +170,14 @@ public class Users implements Serializable {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", username=" + username + ", nickname=" + nickname + ", password=" + password
+				+ ", status=" + status + ", email=" + email + ", phonenumber=" + phonenumber + ", sex=" + sex
+				+ ", avatar=" + avatar + ", usertype=" + usertype + ", createby=" + createby + ", createtime="
+				+ createtime + ", updateby=" + updateby + ", updatetime=" + updatetime + ", deleted=" + deleted + "]";
 	}
 
 	
