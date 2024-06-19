@@ -1,5 +1,7 @@
 package com.EBA.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -12,10 +14,13 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserMapper userMapper;
+	
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,9 +35,13 @@ public class MyUserDetailsService implements UserDetailsService {
 		
 //		判斷密碼是不是正確
 //		TODO
+//		賦權操作 死的處理
+		List<String> list = new ArrayList<>();
+		list.add("select");
+		list.add("delete");
 //		返回UserDetails對象
 
-		return new LoginUser(users);
+		return new LoginUser(users,list);
 	}
 	public UserDetails authenticate(String username, String rawPassword) throws UsernameNotFoundException {
         UserDetails userDetails = loadUserByUsername(username);

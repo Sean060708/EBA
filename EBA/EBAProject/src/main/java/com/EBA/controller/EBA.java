@@ -1,6 +1,7 @@
 package com.EBA.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -42,6 +43,7 @@ public class EBA {
 	
 	@GetMapping("/hello")
 	@ResponseBody
+	@PreAuthorize("hasAnyAuthority('select')")  //權限本身就是使用字符串來管理
 	public String hello() {
 		return "Hello";
 	}
