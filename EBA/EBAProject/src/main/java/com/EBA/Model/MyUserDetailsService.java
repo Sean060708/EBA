@@ -7,11 +7,14 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.EBA.Mapper.MenuMapper;
+import com.EBA.Mapper.UserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 
@@ -20,27 +23,30 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserMapper userMapper;
 	
-	
+	@Autowired
+	private MenuMapper menuMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		查數據庫
+		System.out.println("用戶名:"+username);
+		if(username.equals("")) {
+			throw new InternalAuthenticationServiceException("");
+		}
+		//		查數據庫
 		QueryWrapper<Users> wrapper = new QueryWrapper<Users>();
-		wrapper.eq("USERNAME",username);
+		wrapper.eq("username",username);
 		Users users = userMapper.selectOne(wrapper);
 
-		if(Objects.isNull(users)) {
-			throw new RuntimeException("帳號不存在");
+		if(users == null) {
+			throw new UsernameNotFoundException("");
 		}
 		
 //		判斷密碼是不是正確
 //		TODO
 //		賦權操作 死的處理
-		List<String> list = new ArrayList<>();
-		list.add("select");
-		list.add("delete");
+		List<String> list = menuMapper.getMenuByUserId(users.getId());
 //		返回UserDetails對象
-
+		System.out.println("list" +list);
 		return new LoginUser(users,list);
 	}
 	public UserDetails authenticate(String username, String rawPassword) throws UsernameNotFoundException {

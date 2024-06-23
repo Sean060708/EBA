@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class LoginUser implements UserDetails {
-
+	
 	private Users users;
 
 	private List<String> list;
@@ -52,7 +52,7 @@ public class LoginUser implements UserDetails {
 		if (authorities != null) {
 			return authorities;
 		}
-		authorities = new ArrayList<SimpleGrantedAuthority>();
+		authorities = new ArrayList<>();
 		for (String item : list) {
 			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(item);
 			authorities.add(authority);

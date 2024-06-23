@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.EBA.Model")
+@MapperScan("com.EBA.Mapper")
 public class EbaProjectApplication {
 
 	public static void main(String[] args) {

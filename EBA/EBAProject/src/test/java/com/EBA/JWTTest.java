@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.EBA.Model.UserMapper;
+import com.EBA.Mapper.UserMapper;
 import com.EBA.Model.Users;
 import com.EBA.Utils.JwtUtils;
 
