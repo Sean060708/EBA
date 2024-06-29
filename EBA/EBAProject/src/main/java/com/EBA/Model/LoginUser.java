@@ -57,7 +57,7 @@ public class LoginUser implements UserDetails {
 			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(item);
 			authorities.add(authority);
 		}
-		return null;
+		return authorities;
 	}
 
 	@Override

@@ -46,21 +46,12 @@ public class SecurityConfig {
 	@Autowired
 	private LoginFailureHandler loginFailureHandler;
 	
-	@Autowired
-    private MyUserDetailsService myUserDetailsService;
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(myUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
 
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -73,17 +64,15 @@ public class SecurityConfig {
 //	        	關閉csrf
 	        	http.csrf(csrf -> csrf.disable());
 //	        	用戶認證校驗失敗處理器
-//	        	http.formLogin(configure -> configure.failureHandler(loginFailureHandler));
+	        	http.formLogin(configure -> configure.failureHandler(loginFailureHandler).loginPage("/EBALogin").loginProcessingUrl("/login").defaultSuccessUrl("/EBA", true).permitAll());
 	        	http.sessionManagement(configure -> configure.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 	        	//	        	配置請求的攔截方式
-	        	http.authorizeHttpRequests(auth -> auth.requestMatchers("/EBAlogin","logout")
-	        			.permitAll().anyRequest().authenticated());
+	        	http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 //	        	配置過濾器執行順序
 	        	http.addFilterBefore(jwtAuthenticationTokenFilter,UsernamePasswordAuthenticationFilter.class);
 //	        	添加自訂義的異常處理類
 	        	http.exceptionHandling(t -> {t.authenticationEntryPoint(anonymousAuthenticationHandler).accessDeniedHandler(customerAccessDeniedHandler);
 	        	});
-	        	http.authenticationProvider(authenticationProvider());
 	        	return http.build();
 	        	}
 }

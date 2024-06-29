@@ -8,5 +8,6 @@ public class WebAppConfig implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	registry.addResourceHandler("/WEB-INF/**").addResourceLocations("/WEB-INF/");
+	registry.addResourceHandler("/Index/**").addResourceLocations("/WEB-INF/Index/");
 	}
 }

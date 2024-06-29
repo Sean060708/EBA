@@ -53,10 +53,10 @@ public class JWTTest {
 		System.out.println(encode1);
 		System.out.println(encode2);
 		
-		boolean boolean1 = passwordEncoder.matches("123","$2a$10$mVcbPuk4326VAb4csrTnYu1eMa2Z2gyzrNSLQtM.zgHMs6r6hJ9iS");
+		boolean boolean1 = passwordEncoder.matches("zo4j4g426","$2a$10$iLe82JWNqsYWmLj.Ys27xO6PL9FsQrwzXnh4jgqRhDPxKnBv3G3US");
 		boolean boolean2 = passwordEncoder.matches("123","$2a$10$tGKOdUXmNfGJUX9N7sWLfeRMxkzDPzDMypCjhx6JjOzzkW2h7C1Z6");
 		
-		System.out.println(boolean1);
+		System.out.println("boolean1" + boolean1);
 		System.out.println(boolean2);
 	
 	}

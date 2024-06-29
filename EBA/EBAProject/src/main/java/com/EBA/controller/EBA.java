@@ -1,5 +1,6 @@
  package com.EBA.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.EBA.Model.MyUserDetailsService;
 import com.EBA.Model.R;
 import com.EBA.Model.UserServiceImpl;
 import com.EBA.Model.Users;
@@ -28,6 +32,7 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -37,6 +42,13 @@ public class EBA {
 	
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+	
+	@Autowired
+	private MyUserDetailsService mService;
+
+	@Autowired
+	private HttpSession session;
+	
 	
 	@GetMapping("/EBA")
 	public String GoEBA() {
@@ -49,6 +61,34 @@ public class EBA {
 		
 		return "EBALogin";
 	}
+	
+	@GetMapping("/EBARegistry")
+	public String EBARegistry() {
+		
+		return "EBARegistry";
+	}
+	
+	@PostMapping("/add")
+    public String addUser(@RequestParam("username") String username,
+            @RequestParam("nickname") String nickname,
+            @RequestParam("password") String password,
+            @RequestParam("email") String email,
+            @RequestParam("phonenumber") String phonenumber,
+            @RequestParam("sex") Integer sex,
+            @RequestParam("avatar") String avatar
+            ) {
+		
+		Date currentDate = new Date();
+
+		Users user = new Users(username,nickname,password,0,email,phonenumber,sex,avatar,0,currentDate,0);
+        boolean saveUser = uService.saveUser(user);
+        
+        if(saveUser) {
+        	return "EBALogin";
+        }
+        return "EBARegistry";
+	}
+	
 	@PostMapping("/EBAlogin")
 	@ResponseBody
 	public R Login(@RequestBody Users users) {

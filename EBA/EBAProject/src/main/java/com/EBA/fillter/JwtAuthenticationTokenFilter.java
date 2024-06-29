@@ -44,7 +44,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
 		    System.out.println("Token: " + token);
 			String uri = request.getRequestURI();
 			System.out.println("uri" + uri);
-			if(!uri.equals("/EBAlogin")) {
+			if(uri.equals("/hello")) {
 	
 //			如果是登入接口 直接放行
 				System.out.println("Validating token...");
@@ -55,7 +55,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter{
 			loginFailureHandler.onAuthenticationFailure(request, response, e);
 		} 
 //		放行	
-		filterChain.doFilter(request, response);
+		doFilter(request, response,filterChain);
 	}
 //	用於token的校驗方式
 	private void validateToken(HttpServletRequest request) {

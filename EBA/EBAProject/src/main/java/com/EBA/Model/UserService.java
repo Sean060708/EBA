@@ -10,4 +10,5 @@ public interface UserService extends IService<Users>{
 
 	Map<String, Object> login(Users users);
 	
+	boolean saveUser(Users user);
 }

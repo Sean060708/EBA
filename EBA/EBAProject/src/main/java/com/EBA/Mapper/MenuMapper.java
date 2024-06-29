@@ -15,5 +15,5 @@ public interface MenuMapper extends BaseMapper<Menu>{
 			+ "inner join sys_user_role t4 on t4.role_id = t3.id\r\n"
 			+ "inner join sys_users t5 on t5.id = t4.user_id\r\n"
 			+ "where t5.id =#{id}")
-	List<String> getMenuByUserId(Integer integer); 
+	List<String> getMenuByUserId(Integer id); 
 }

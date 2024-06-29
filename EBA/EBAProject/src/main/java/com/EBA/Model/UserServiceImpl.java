@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.EBA.Mapper.UserMapper;
@@ -23,7 +24,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Users> implements Us
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Override
+	
 	public Map<String, Object> login(Users users) {
 //		封裝auth對象
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(users.getUsername(),users.getPassword(),null);
@@ -50,5 +55,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,Users> implements Us
 		return map;
 	}
 	
-	
+	@Override
+    public boolean saveUser(Users user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        return save(user);
+    }
 }

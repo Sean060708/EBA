@@ -172,6 +172,22 @@ public class Users implements Serializable {
 		this.deleted = deleted;
 	}
 
+	public Users(String username, String nickname, String password, Integer status, String email, String phonenumber,
+			Integer sex, String avatar, Integer usertype, Date createtime, Integer deleted) {
+		super();
+		this.username = username;
+		this.nickname = nickname;
+		this.password = password;
+		this.status = status;
+		this.email = email;
+		this.phonenumber = phonenumber;
+		this.sex = sex;
+		this.avatar = avatar;
+		this.usertype = usertype;
+		this.createtime = createtime;
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", nickname=" + nickname + ", password=" + password
